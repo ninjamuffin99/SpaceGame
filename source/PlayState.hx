@@ -24,6 +24,7 @@ class PlayState extends FlxState
 	
 	private var curGameQuality:Float = 0;
 	private var curGameSales:Int = 0;
+	private var curGameScore:Float = 0;
 	private var submittedIGF:Bool = false;
 	
 	override public function create():Void
@@ -53,7 +54,8 @@ class PlayState extends FlxState
 	{
 		weeks += 1;
 		gameMakeSkill += FlxG.random.float(0, 3.5);
-		curGameQuality += FlxG.random.float(0, 1) * gameMakeSkill;
+		curGameQuality += FlxG.random.float(0, 0.5) * gameMakeSkill;
+		curGameScore += FlxG.random.float(0.07, 0.19);
 	}
 	
 	private function submitToIGF():Void
@@ -72,8 +74,8 @@ class PlayState extends FlxState
 	
 	private function releaseGame():Void
 	{
+		curGameSales = Std.int(curGameQuality);
 		curGameQuality = 0;
-		curGameSales = FlxG.random.int(0, Std.int(curGameQuality * FlxG.random.int(0, 10)));
 	}
 	
 	override public function update(elapsed:Float):Void
@@ -88,7 +90,7 @@ class PlayState extends FlxState
 		month = Std.int(weeks / 4.34524);
 		year = Std.int(month / 12);
 		
-		skillTexts.text = Std.string(gameMakeSkill) + "\n" + curGameQuality + "\nSales: " + curGameSales;
+		skillTexts.text = Std.string(gameMakeSkill) + "\n" + curGameScore + "\nSales: " + curGameSales;
 		
 		dateTxt.text = "Week: " + weeks + "\nMonth: " + month + "\nYear: " + year;
 		
